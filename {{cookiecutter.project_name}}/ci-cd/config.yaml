@@ -1,0 +1,24 @@
+pipelines:
+- name: Publish
+  type: template
+  file: docker-publish.yaml
+  params:
+    base:
+      image: x_io.docker-docker-release/python
+      tag: 3-alpine3.8
+    docker:
+      targetPath: causeway_analytics-docker-dev-local/{{cookiecutter.project_name}}
+
+- name: Release
+  type: template
+  file: docker-release.yaml
+  params:
+    docker:
+      targetPath: causeway_analytics-docker-release-local/
+
+- name: PR
+  type: template
+  file: docker-pr.yaml
+  params:
+    docker:
+      targetPath: causeway_analytics-docker-scratch-local/{{cookiecutter.project_name}}
